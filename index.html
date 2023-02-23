@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./aspiradora.css">
+</head>
+
+<body>
+    <h1>Selecciona en que area empezar a limpiar</h1>
+    <div class="row">
+       
+        <div>
+            <h2>Area A</h2>
+            <div class="area" id="areaA"  onclick="iniciarLimpieza('areaA')">
+                <div class="basura"></div>
+            </div>
+        </div>
+        <div>
+            <h2>Area B</h2>
+            <div class="area" id="areaB" onclick="iniciarLimpieza('areaB')">
+                <div class="basura"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h3 id="trashQuantityLabel">Cantidad de basura: </h3>
+    </div>
+    <script src="./aspiradora.js"></script>
+</body>
+
+</html>
