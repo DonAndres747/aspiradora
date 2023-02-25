@@ -26,7 +26,7 @@ function generatePoints() {
       counter++
     }
   }
-  document.getElementById("trashQuantityLabel").innerText = "Cantidad de basuras: " + counter;
+  document.getElementById("trashQuantityLabel").innerText = counter;
 }
 
 function addSquareToArea(area) {
@@ -49,7 +49,7 @@ function addSquareToArea(area) {
 
 }
 
-
+let intentos = 0;
 async function cleanArea(area) {
 
   const container = document.getElementById(area).querySelector('.basura');
@@ -59,17 +59,34 @@ async function cleanArea(area) {
 
   console.clear()
   // Mover el robot a cada punto del área
-  console.log("Pruebas: ", points.length)
+  const containerA = document.getElementById('areaA').querySelector('.basura');
+  const containerB = document.getElementById('areaB').querySelector('.basura');
+  let pointsCounter = containerA.querySelectorAll('.point').length + containerB.querySelectorAll('.point').length;
   for (i = 0; i < points.length; i++) {
-    
-      let pointRect = points.item(i).getBoundingClientRect();
-      let pointX = pointRect.left + pointRect.width / 2;
-      let pointY = pointRect.top;
+
+    let pointRect = points.item(i).getBoundingClientRect();
+    let pointX = pointRect.left + pointRect.width / 2;
+    let pointY = pointRect.top;
     console.log(points.item(i), i)
     await moveRobot(pointX, pointY, points.item(i), points.length);
+    document.getElementById("trashQuantityLabel").innerText = --pointsCounter;
     setTimeout(() => {
       console.log("para: ", points)
     }, 6000);
+  }
+
+  await container.removeChild(newSquare);
+
+  if (intentos < 1) {
+
+    intentos++;
+    area2 = (area = 'areaA' ? 'areaB' : 'areaA');
+    await addSquareToArea(area2);
+    await cleanArea(area2)
+  } else {
+    setTimeout(() => {
+      alert('Limpíeza Terminada!')
+    }, 3000);
   }
 }
 
@@ -106,7 +123,7 @@ function moveRobot(x, y, point, rL) {
     // Espera 1 segundo antes de resolver la promesa
     setTimeout(() => {
       resolve();
-    }, (rL-1) * 3000);
+    }, (rL - 1) * 3000);
   });
 
 }
